@@ -6,29 +6,42 @@ function $(...args) {
             break;
         case 'string':
             // if first char is #, select a single element, otherwise select all elements
-            const node_list = args[0].charAt(0) === "#" ?
+            const nodeList = args[0].charAt(0) === "#" ?
                 document.querySelector(args[0]) :
                 document.querySelectorAll(args[0]);
-            return _decorate(node_list);
+            return _decorate(nodeList);
     }
 }
 
-function _decorate(node_list) {
-    node_list.on = function () {
-        // bind event listener to an element
+
+// adds methods to collections returned by $(string)
+function _decorate(collection) {
+
+    // creates an event listener on nodelists given a trigger and a handler function
+    collection.on = function (eventName, handler) {
+        nodeList.forEach(function(el) {
+            el.addEventListener(eventName, handler)
+        })
     };
 
-    node_list.css = function (...css_args) {
-        // can pass either:
-        // 1 value to get a single property
-        // 2 values to set a single css property
-        // an object to set multiple css properties
+    // get and set css properties on nodelists
+    collection.css = function (...cssProps) {
+        if (cssProps.length == 1 && typeof cssProps[0] === 'object') {
+            // set props one by one
+        } else if (cssProps.length == 1 && typeof cssProps[0] == 'string') {
+            // return single property value
+        } else if (cssProps.length == 2 && typeof cssProps[0] == 'string' && typeof cssProps[1] == 'string') {
+            // set single property
+        } else {
+            throw new Error(`Invalid parameter(s): ${cssProps} passed to .css()`);
+        }
     };
 
-    node_list.html = function (elements) {
-        return elements[0].innerHTML;
+    // returns the HTML of the first element in a nodelist
+    collection.html = function (collection) {
+        return collection[0].innerHTML;
     }
 
-    return node_list;
+    return nodeList;
 }
 

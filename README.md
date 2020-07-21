@@ -1,10 +1,10 @@
 ## pquery
 
-- [ ] $ function
-- [ ] DOM ready function
+- [x] $ function
+- [x] DOM ready function
 - [x] selector
 
 #### methods
-- [ ] html
-- [ ] on
+- [x] html
+- [x] on
 - [ ] css

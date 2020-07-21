@@ -2,7 +2,7 @@
 
 - [ ] $ function
 - [ ] DOM ready function
-- [ ] selector
+- [x] selector
 
 #### methods
 - [ ] html

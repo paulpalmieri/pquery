@@ -5,31 +5,30 @@ function $(...args) {
             document.addEventListener('DOMContentLoaded', args[0]);
             break;
         case 'string':
-            // selector
-            // has to handle:
-            // - by id
-            // . by class name
-            // plain for html tags
-            const nodes = document.querySelectorAll(args[0]);
-            return nodes;
-            break;
+            // if first char is #, select a single element, otherwise select all elements
+            const node_list = args[0].charAt(0) === "#" ?
+                document.querySelector(args[0]) :
+                document.querySelectorAll(args[0]);
+            return _decorate(node_list);
     }
 }
 
-function _decorate(elements) {
-    elements.on = function () {
+function _decorate(node_list) {
+    node_list.on = function () {
         // bind event listener to an element
     };
 
-    elements.css = function (...css_args) {
+    node_list.css = function (...css_args) {
         // can pass either:
         // 1 value to get a single property
         // 2 values to set a single css property
         // an object to set multiple css properties
     };
 
-    elements.html = function (elements) {
+    node_list.html = function (elements) {
         return elements[0].innerHTML;
     }
+
+    return node_list;
 }
 
